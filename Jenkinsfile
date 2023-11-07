@@ -35,6 +35,17 @@ pipeline {
                 sh 'mvn test'
             }
         }
+stage('SRC Analysis Testing') {
+            steps {
+                
+                script {
+                withSonarQubeEnv('sonarqube-10.2.1'){
+                    sh 'mvn sonar:sonar'
+                        }
+                    }
+                
+            }
+        }
         stage('Build Artifact') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
