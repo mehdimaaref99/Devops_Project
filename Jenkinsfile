@@ -1,3 +1,17 @@
+def emailTemplate = """
+Hello,
+
+This is a Jenkins pipeline notification for build #${currentBuild.number}:
+
+Status: ${currentBuild.result}
+Pipeline URL: ${env.BUILD_URL}
+
+Please review the details and take any necessary actions.
+
+Thank you,
+Your Jenkins Server
+"""
+
 pipeline {
     agent {
         label 'agent2'
@@ -89,4 +103,19 @@ stage('SRC Analysis Testing') {
                 }
         }
     }
+
+   post {
+         
+        always {
+            // Send an email notification using the template
+            emailext(
+                subject: "Pipeline ${currentBuild.result}: ${currentBuild.fullDisplayName}",
+                body: emailTemplate, // Use the emailTemplate variable
+                to: 'maaref.mehdi@esprit.tn', // Replace with the desired email address
+                attachLog: true,
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+            )
+        }
+    }
+
 } }
