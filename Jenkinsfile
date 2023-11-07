@@ -30,6 +30,11 @@ pipeline {
             }
         }
         
+ stage('Unit Testing') {
+            steps {
+                sh 'mvn test'
+            }
+        }
         stage('Build Artifact') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
