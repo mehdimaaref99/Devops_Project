@@ -104,7 +104,10 @@ stage('SRC Analysis Testing') {
         }
     }
 
-   post {
+ 
+
+} 
+  post {
          
         always {
             // Send an email notification using the template
@@ -118,4 +121,4 @@ stage('SRC Analysis Testing') {
         }
     }
 
-} }
+}
